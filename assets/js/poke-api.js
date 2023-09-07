@@ -1,8 +1,10 @@
 
 const pokeApi = {}
+let pokemonDetailsForModal = {}
 
 function convertPokeApiDetailToPokemon(pokeDetail) {
     const pokemon = new Pokemon()
+    pokemonDetailsForModal[pokeDetail.id] = pokeDetail;
     pokemon.number = pokeDetail.id
     pokemon.name = pokeDetail.name
 
@@ -31,5 +33,7 @@ pokeApi.getPokemons = (offset = 0, limit = 5) => {
         .then((jsonBody) => jsonBody.results)
         .then((pokemons) => pokemons.map(pokeApi.getPokemonDetail))
         .then((detailRequests) => Promise.all(detailRequests))
-        .then((pokemonsDetails) => pokemonsDetails)
+        .then((pokemonsDetails) => {
+            console.log(pokemonDetailsForModal);
+            return pokemonsDetails})
 }
